@@ -34,7 +34,7 @@ S  = computeMimeticIP(G, rock, 'Verbose', verbose);
 %
 bc = pside([], G, 'LEFT', 0);
 CS = generateCoarseSystem(G, rock, S, CG, ones([G.cells.num, 1]), ...
-                          'Verbose', verbose, 'bc', bc);
+                          'Verbose', verbose, 'bc', bc, 'overlap', 0);
 
 W = generateCoarseWellSystem(G, S, CG, CS, ones([G.cells.num, 1]), rock, W);
 
@@ -43,7 +43,7 @@ xMs  = initState(G, W, 0);
 
 xRef = incompMimetic    (xRef, G, S, fluid, 'bc', bc, 'wells', W);
 xMs  = solveIncompFlowMS(xMs, G, CG, p, S, CS, fluid, 'wells', W, ...
-                         'bc', bc);
+                         'bc', bc, 'Solver', 'hybrid');
 
 %% plot output
 f = figure;
